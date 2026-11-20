@@ -29,6 +29,8 @@ npm test          # test di logica e coerenza dei contenuti
 npm run build     # build statica in dist/
 ```
 
+**Versione online**: https://mizral86.github.io/Menga-Learn/ (pubblicata automaticamente a ogni push su `main` dal workflow `.github/workflows/pages.yml`; in *Settings → Pages* la sorgente deve essere *GitHub Actions*).
+
 La build è un sito statico con routing basato su hash: si può pubblicare così com'è su GitHub Pages, Azure Static Web Apps, Netlify o qualsiasi hosting statico.
 
 ## Struttura
