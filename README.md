@@ -31,6 +31,8 @@ npm run build     # build statica in dist/
 
 **Versione online**: https://mizral86.github.io/Menga-Learn/ (pubblicata automaticamente a ogni push su `main` dal workflow `.github/workflows/pages.yml`; in *Settings → Pages* la sorgente deve essere *GitHub Actions*).
 
+Per spostare l'app su un dominio personale (es. `learn.menga.app`) segui la guida [docs/dominio-personalizzato.md](docs/dominio-personalizzato.md): l'app funziona sia in una sottocartella sia alla radice di un dominio senza modifiche al codice. I progressi si trasferiscono con **Info → Esporta / Importa progressi**.
+
 La build è un sito statico con routing basato su hash: si può pubblicare così com'è su GitHub Pages, Azure Static Web Apps, Netlify o qualsiasi hosting statico.
 
 ## Struttura

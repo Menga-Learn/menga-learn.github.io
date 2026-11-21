@@ -891,3 +891,21 @@ ul.plain li.row {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.plain-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.plain-fieldset legend {
+  padding: 0;
+  margin-bottom: 4px;
+}
+.ok-text {
+  color: var(--ok);
+  margin: 0;
+}
+.ko-text {
+  color: var(--ko);
+  margin: 0;
+}
