@@ -10,7 +10,8 @@ export const dp600: Certification = {
   level: 'Associate',
   description:
     "Progetta, crea e distribuisci soluzioni di analisi dei dati su scala enterprise con Microsoft Fabric: lakehouse, warehouse, trasformazioni, modelli semantici e governance.",
-  accent: '#0f766e',
+  accent: '#2e6b6e',
+  accentDark: '#84bdb5',
   exam: {
     durationMinutes: 100,
     passingScore: 700,

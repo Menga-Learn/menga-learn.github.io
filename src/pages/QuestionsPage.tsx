@@ -5,6 +5,7 @@ import { useCertProgress, wrongQuestionIds } from '../lib/progress';
 import { Breadcrumbs } from '../components/Layout';
 import { ProgressBar } from '../components/ProgressBar';
 import { NotFoundPage } from './NotFoundPage';
+import { accentProps } from '../lib/theme';
 
 export function QuestionsPage() {
   const { certId } = useParams();
@@ -21,7 +22,7 @@ export function QuestionsPage() {
   const available = domain ? cert.questions.filter((q) => q.domainId === domain).length : cert.questions.length;
 
   return (
-    <div style={{ ['--accent' as string]: cert.accent }}>
+    <div {...accentProps(cert)}>
       <Breadcrumbs items={[{ label: 'Certificazioni', to: '/' }, { label: cert.code, to: `/c/${cert.id}` }, { label: 'Domande' }]} />
       <h1>Domande di certificazione {cert.code}</h1>
       <p className="lead">

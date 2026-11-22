@@ -7,7 +7,19 @@
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-    <meta name="theme-color" content="#0f766e" />
+    <meta name="theme-color" content="#f5f2eb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1b1a18" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Applica il tema salvato prima del primo render (vedi src/lib/theme.ts).
+      try {
+        var t = localStorage.getItem('menga-learn-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+          var c = t === 'dark' ? '#1b1a18' : '#f5f2eb';
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+        }
+      } catch (e) {}
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Menga Learn" />
     <title>Menga Learn</title>

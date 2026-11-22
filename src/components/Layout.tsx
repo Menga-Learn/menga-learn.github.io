@@ -1,5 +1,50 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { applyTheme, nextTheme, readTheme, type ThemeChoice } from '../lib/theme';
+
+const THEME_LABEL: Record<ThemeChoice, string> = { auto: 'Auto', light: 'Chiaro', dark: 'Scuro' };
+const THEME_ICON: Record<ThemeChoice, ReactNode> = {
+  auto: (
+    <>
+      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" />
+    </>
+  ),
+  light: (
+    <>
+      <circle cx="12" cy="12" r="4" fill="currentColor" />
+      <path
+        d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </>
+  ),
+  dark: <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="currentColor" />,
+};
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState<ThemeChoice>(readTheme);
+  const next = nextTheme(theme);
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={() => {
+        applyTheme(next);
+        setTheme(next);
+      }}
+      title={`Tema: ${THEME_LABEL[theme]} (passa a ${THEME_LABEL[next]})`}
+      aria-label={`Tema: ${THEME_LABEL[theme]}. Passa a ${THEME_LABEL[next]}`}
+    >
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        {THEME_ICON[theme]}
+      </svg>
+      <span className="theme-label">{THEME_LABEL[theme]}</span>
+    </button>
+  );
+}
 
 export function Layout() {
   const { pathname } = useLocation();
@@ -23,6 +68,7 @@ export function Layout() {
               Certificazioni
             </NavLink>
             <NavLink to="/info">Info</NavLink>
+            <ThemeToggle />
           </nav>
         </div>
       </header>

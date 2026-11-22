@@ -4,6 +4,7 @@ import { useCertProgress } from '../lib/progress';
 import { ProgressBar } from '../components/ProgressBar';
 import { Breadcrumbs } from '../components/Layout';
 import { NotFoundPage } from './NotFoundPage';
+import { accentProps } from '../lib/theme';
 
 const KIND_LABEL = { lab: 'Laboratorio', codice: 'Codice', scenario: 'Scenario' } as const;
 
@@ -19,7 +20,7 @@ export function CertPage() {
   const lastAttempt = p.attempts.find((a) => a.mode === 'esame');
 
   return (
-    <div style={{ ['--accent' as string]: cert.accent }}>
+    <div {...accentProps(cert)}>
       <Breadcrumbs items={[{ label: 'Certificazioni', to: '/' }, { label: cert.code }]} />
       <section className="cert-hero">
         <div>

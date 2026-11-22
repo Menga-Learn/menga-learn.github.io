@@ -8,6 +8,7 @@ import { QuestionCard } from '../components/QuestionCard';
 import { Breadcrumbs, EmptyState } from '../components/Layout';
 import { ProgressBar } from '../components/ProgressBar';
 import { NotFoundPage } from './NotFoundPage';
+import { accentProps } from '../lib/theme';
 
 type Mode = 'pratica' | 'esame' | 'ripasso';
 
@@ -107,7 +108,7 @@ function Session({ cert, mode, domain, count }: { cert: Certification; mode: Mod
 
   if (result) {
     return (
-      <div style={{ ['--accent' as string]: cert.accent }}>
+      <div {...accentProps(cert)}>
         {crumbs}
         <Results cert={cert} result={result} questions={questions} answers={answers} isExam={isExam} mode={mode} />
       </div>
@@ -126,7 +127,7 @@ function Session({ cert, mode, domain, count }: { cert: Certification; mode: Mod
   }
 
   return (
-    <div className="session" style={{ ['--accent' as string]: cert.accent }}>
+    <div className="session" {...accentProps(cert)}>
       {crumbs}
       <div className="session-bar">
         <div>
