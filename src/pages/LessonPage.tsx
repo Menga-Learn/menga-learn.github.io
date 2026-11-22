@@ -8,6 +8,7 @@ import { QuestionCard } from '../components/QuestionCard';
 import { Breadcrumbs } from '../components/Layout';
 import { NotFoundPage } from './NotFoundPage';
 import type { Question } from '../types';
+import { accentProps } from '../lib/theme';
 
 export function LessonPage() {
   const { certId, lessonId } = useParams();
@@ -19,7 +20,7 @@ export function LessonPage() {
   const done = p.lessons.includes(lesson.id);
 
   return (
-    <div className="lesson-layout" style={{ ['--accent' as string]: cert.accent }}>
+    <div className="lesson-layout" {...accentProps(cert)}>
       <Breadcrumbs
         items={[
           { label: 'Certificazioni', to: '/' },

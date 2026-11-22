@@ -3,6 +3,7 @@ import { certifications } from '../content';
 import { countItems } from '../lib/catalog';
 import { useProgress } from '../lib/progress';
 import { ProgressBar } from '../components/ProgressBar';
+import { accentProps } from '../lib/theme';
 
 export function HomePage() {
   const state = useProgress();
@@ -23,7 +24,7 @@ export function HomePage() {
           const done = (p?.lessons.length ?? 0) + (p?.exercises.length ?? 0);
           const totalItems = n.lessons + n.exercises;
           return (
-            <Link key={cert.id} to={`/c/${cert.id}`} className="card cert-card" style={{ ['--accent' as string]: cert.accent }}>
+            <Link key={cert.id} to={`/c/${cert.id}`} className="card cert-card" {...accentProps(cert)}>
               <div className="cert-code">{cert.code}</div>
               <h3>{cert.title}</h3>
               <p className="muted small">

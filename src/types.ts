@@ -14,8 +14,13 @@ export interface Certification {
   vendor: string;
   level: string;
   description: string;
-  /** Colore d'accento della certificazione (CSS) */
+  /**
+   * Colore d'accento della certificazione (CSS) per il tema chiaro.
+   * Scegli un tono medio-scuro e poco saturo: deve avere contrasto ≥ 4.5:1 sul fondo #f5f2eb.
+   */
   accent: string;
+  /** Variante per il tema scuro: tono chiaro e desaturato (contrasto ≥ 4.5:1 su #1b1a18). */
+  accentDark: string;
   exam: ExamInfo;
   domains: Domain[];
   modules: Module[];

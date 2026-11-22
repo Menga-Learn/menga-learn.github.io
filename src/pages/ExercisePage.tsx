@@ -5,6 +5,7 @@ import { progress, useCertProgress } from '../lib/progress';
 import { Markdown } from '../components/Markdown';
 import { Breadcrumbs } from '../components/Layout';
 import { NotFoundPage } from './NotFoundPage';
+import { accentProps } from '../lib/theme';
 
 const KIND_LABEL = { lab: 'Laboratorio guidato', codice: 'Esercizio di codice', scenario: 'Caso di studio' } as const;
 const LANG_LABEL = { sql: 'T-SQL', dax: 'DAX', kql: 'KQL', pyspark: 'PySpark', powerquery: 'Power Query M' } as const;
@@ -29,7 +30,7 @@ function ExerciseView() {
   const done = p.exercises.includes(exercise.id);
 
   return (
-    <div className="lesson-layout" style={{ ['--accent' as string]: cert.accent }}>
+    <div className="lesson-layout" {...accentProps(cert)}>
       <Breadcrumbs
         items={[
           { label: 'Certificazioni', to: '/' },

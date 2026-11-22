@@ -1,42 +1,103 @@
+/*
+ * Palette pensata per lunghe sessioni di studio:
+ * - chiaro "carta": fondo caldo non bianco puro, testo grigio scuro (non nero) per ridurre l'abbagliamento;
+ * - scuro "notte": grigi caldi, testo avorio, accenti desaturati che non "vibrano" sul fondo scuro.
+ * Tutti i testi rispettano almeno il contrasto WCAG AA (4.5:1); il testo principale supera AAA (7:1).
+ * Il tema segue il sistema, oppure la scelta salvata in <html data-theme="light|dark">.
+ */
 :root {
-  --bg: #f7f7f5;
-  --surface: #ffffff;
-  --surface-2: #f0f0ec;
-  --text: #1c1d1f;
-  --muted: #5d6066;
-  --border: #e1e1dc;
-  --accent: #0f766e;
-  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
-  --ok: #15803d;
-  --ok-soft: #dcfce7;
-  --ko: #b91c1c;
-  --ko-soft: #fee2e2;
-  --warn: #b45309;
-  --code-bg: #1e2127;
-  --code-text: #e6e6e6;
   --radius: 12px;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 2px 8px rgb(0 0 0 / 0.04);
+  --bg: #f5f2eb;
+  --surface: #fcfaf6;
+  --surface-2: #ede8de;
+  --text: #2b2925;
+  --muted: #625d54;
+  --border: #e0d9cc;
+  --accent: #2e6b6e;
+  --accent-soft: color-mix(in srgb, var(--accent) 11%, transparent);
+  --on-accent: #ffffff;
+  --brand: #2e6b6e;
+  --ok: #2a7245;
+  --ok-soft: #e2efe4;
+  --ko: #a8443a;
+  --ko-soft: #f6e3df;
+  --on-status: #ffffff;
+  --warn: #94590f;
+  --code-bg: #2b2a27;
+  --code-text: #ebe6dc;
+  --selection: color-mix(in srgb, var(--accent) 22%, transparent);
+  --shadow: 0 1px 2px rgb(60 45 20 / 0.05), 0 2px 8px rgb(60 45 20 / 0.04);
   color-scheme: light;
 }
 
+:root[data-theme='dark'] {
+  --bg: #1b1a18;
+  --surface: #23221f;
+  --surface-2: #2d2b27;
+  --text: #e4ded2;
+  --muted: #a69f92;
+  --border: #38352f;
+  --accent: #84bdb5;
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  --on-accent: #14211f;
+  --brand: #84bdb5;
+  --ok: #8fc49c;
+  --ok-soft: #223027;
+  --ko: #e39a90;
+  --ko-soft: #3a2724;
+  --on-status: #1b1a18;
+  --warn: #ddb26a;
+  --code-bg: #141412;
+  --code-text: #e4ded2;
+  --selection: color-mix(in srgb, var(--accent) 30%, transparent);
+  --shadow: none;
+  color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #131416;
-    --surface: #1b1c1f;
-    --surface-2: #24262a;
-    --text: #ececec;
-    --muted: #a0a3a9;
-    --border: #2f3136;
-    --accent: #2dd4bf;
-    --ok: #4ade80;
-    --ok-soft: #14301f;
-    --ko: #f87171;
-    --ko-soft: #3a1717;
-    --warn: #fbbf24;
-    --code-bg: #0d0e10;
+  :root:not([data-theme='light']) {
+    --bg: #1b1a18;
+    --surface: #23221f;
+    --surface-2: #2d2b27;
+    --text: #e4ded2;
+    --muted: #a69f92;
+    --border: #38352f;
+    --accent: #84bdb5;
+    --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+    --on-accent: #14211f;
+    --brand: #84bdb5;
+    --ok: #8fc49c;
+    --ok-soft: #223027;
+    --ko: #e39a90;
+    --ko-soft: #3a2724;
+    --on-status: #1b1a18;
+    --warn: #ddb26a;
+    --code-bg: #141412;
+    --code-text: #e4ded2;
+    --selection: color-mix(in srgb, var(--accent) 30%, transparent);
     --shadow: none;
     color-scheme: dark;
   }
+}
+
+/* Accento della singola certificazione (vedi accentProps in src/lib/theme.ts) */
+[data-accent] {
+  --accent: var(--accent-light);
+  --accent-soft: color-mix(in srgb, var(--accent) 11%, transparent);
+}
+:root[data-theme='dark'] [data-accent] {
+  --accent: var(--accent-dark);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) [data-accent] {
+    --accent: var(--accent-dark);
+    --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+}
+
+::selection {
+  background: var(--selection);
 }
 
 * {
@@ -118,7 +179,7 @@ h3,
   text-decoration: none;
 }
 .brand svg {
-  color: #0f766e;
+  color: var(--brand);
 }
 .topnav {
   display: flex;
@@ -133,6 +194,32 @@ h3,
 .topnav a.active {
   color: var(--text);
   background: var(--surface-2);
+}
+.topnav {
+  align-items: center;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+@media (max-width: 420px) {
+  .theme-label {
+    display: none;
+  }
 }
 
 .footer {
@@ -285,12 +372,7 @@ a.card:hover {
 .btn.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
-}
-@media (prefers-color-scheme: dark) {
-  .btn.primary {
-    color: #06201d;
-  }
+  color: var(--on-accent);
 }
 .btn.ghost {
   background: transparent;
@@ -298,7 +380,7 @@ a.card:hover {
 .btn.danger {
   background: var(--ko);
   border-color: var(--ko);
-  color: #fff;
+  color: var(--on-status);
 }
 .btn.small {
   min-height: 32px;
@@ -439,7 +521,7 @@ a.card:hover {
   display: grid;
   place-items: center;
   font-size: 0.75rem;
-  color: #fff;
+  color: var(--on-status);
 }
 .item.done .check {
   background: var(--ok);
@@ -485,6 +567,9 @@ a.card:hover {
 }
 .md h3 {
   margin-top: 1.3em;
+}
+.md {
+  line-height: 1.7;
 }
 .md p,
 .md li {
@@ -645,7 +730,7 @@ a.card:hover {
 }
 .option.selected .option-key {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 .option.right {
   border-color: var(--ok);
