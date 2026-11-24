@@ -57,11 +57,10 @@ export function Layout() {
       <header className="topbar">
         <div className="container topbar-inner">
           <Link to="/" className="brand" aria-label="Menga Learn, home">
-            <svg viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
-              <rect width="64" height="64" rx="14" fill="currentColor" />
-              <path d="M14 44V20l18 14 18-14v24" fill="none" stroke="var(--bg)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span>Menga Learn</span>
+            <img src="./logo.svg" width="32" height="32" alt="" />
+            <span className="wordmark">
+              Menga <span>Learn</span>
+            </span>
           </Link>
           <nav className="topnav">
             <NavLink to="/" end>
