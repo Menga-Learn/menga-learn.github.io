@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0f766e"/><path d="M14 44V20l18 14 18-14v24" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a9e99"/>
+      <stop offset="0.55" stop-color="#2e6b6e"/>
+      <stop offset="1" stop-color="#22504f"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fcfaf6"/>
+      <stop offset="1" stop-color="#e6efe9"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bfe3dc"/>
+      <stop offset="1" stop-color="#7fbdb4"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- libro aperto a forma di M -->
+  <path d="M112 396V222c0-22 22-32 38-16l106 106v116c-38-30-92-42-144-32z" fill="url(#page)"/>
+  <path d="M400 396V222c0-22-22-32-38-16L256 312v116c38-30 92-42 144-32z" fill="url(#page)"/>
+  <path d="M150 300v80c40-2 76 10 106 30v-72c-26-24-64-38-106-38z" fill="url(#inner)"/>
+  <path d="M362 300v80c-40-2-76 10-106 30v-72c26-24 64-38 106-38z" fill="url(#inner)"/>
+  <path d="M256 330v98" stroke="#2e6b6e" stroke-width="4" opacity=".35"/>
+  <!-- spunta -->
+  <path d="M222 246l28 28 56-56" fill="none" stroke="#a9e3d9" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- tocco -->
+  <path d="M180 150v44c0 0 30 22 76 22s76-22 76-22v-44z" fill="#d9ece7"/>
+  <path d="M256 66l150 58-150 58-150-58z" fill="#fcfaf6"/>
+  <path d="M396 128v56" stroke="#fcfaf6" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="396" cy="186" r="10" fill="#fcfaf6"/>
+  <path d="M388 194h16l4 34h-24z" fill="#fcfaf6"/>
+</svg>

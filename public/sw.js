@@ -1,6 +1,6 @@
 // Service worker di Menga Learn: rende l'app installabile e utilizzabile offline.
 // Pagine: prima la rete, poi la cache. File statici: prima la cache.
-const CACHE = 'menga-learn-v1';
+const CACHE = 'menga-learn-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', './index.html'])).then(() => self.skipWaiting()));
