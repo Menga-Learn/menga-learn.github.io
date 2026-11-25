@@ -104,8 +104,8 @@ export function HomePage() {
         <div className="card card-soon">
           <h3>Prossime certificazioni</h3>
           <p className="muted">
-            La piattaforma è pensata per accogliere altri percorsi (ad esempio DP-700, PL-300, AZ-900) aggiungendo solo
-            nuovi contenuti.
+            La piattaforma è pensata per accogliere altri percorsi (ad esempio DP-700, PL-300, AZ-900, Databricks Data
+            Analyst) aggiungendo solo nuovi contenuti.
           </p>
         </div>
       </div>
