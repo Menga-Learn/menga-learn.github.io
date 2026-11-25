@@ -2,15 +2,19 @@
 
 Web app per prepararsi alle certificazioni con **percorsi di apprendimento**, **lezioni**, **esercizi** e una sezione dedicata alle **domande di certificazione** (allenamento, simulazione d'esame a tempo, ripasso errori).
 
-Primo percorso disponibile: **Microsoft DP-600 – Associato Ingegnere di Analisi dei Dati in Fabric**.
+Percorsi disponibili:
 
-> Contenuti originali a scopo di studio, allineati all'elenco ufficiale delle competenze. Le domande non provengono dagli esami reali. Progetto non affiliato a Microsoft.
+- **Microsoft DP-600 – Associato Ingegnere di Analisi dei Dati in Fabric**
+- **Databricks Certified Data Engineer Associate** (guida d'esame del 4 maggio 2026)
+- **Databricks Certified Data Engineer Professional** (guida d'esame del 9 ottobre 2026)
+
+> Contenuti originali a scopo di studio, allineati all'elenco ufficiale delle competenze. Le domande non provengono dagli esami reali. Progetto non affiliato a Microsoft né a Databricks.
 
 ## Funzionalità
 
 - **Percorso per domini**: i domini dell'esame con il loro peso, divisi in moduli con lezioni ed esercizi.
 - **Lezioni** in Markdown con punti chiave e una verifica rapida finale.
-- **Esercizi** di tre tipi: laboratori guidati, esercizi di codice (T-SQL, PySpark, KQL, DAX, Power Query) e casi di studio, con suggerimenti progressivi e soluzione commentata.
+- **Esercizi** di tre tipi: laboratori guidati, esercizi di codice (T-SQL, Spark SQL, PySpark, Python, KQL, DAX, Power Query, YAML) e casi di studio, con suggerimenti progressivi e soluzione commentata.
 - **Domande di certificazione**:
   - *Allenamento*: per dominio, con correzione e spiegazione immediata;
   - *Simulazione d'esame*: domande distribuite secondo il peso dei domini, timer, navigazione libera, domande da rivedere e risultato per dominio;
@@ -43,7 +47,7 @@ src/
   content/
     index.ts               registro delle certificazioni
     helpers.ts             q() per scrivere domande compatte, exercise() per gli esercizi
-    dp600/
+    dp600/                 (anche databricks-dea/ e databricks-dep/ con la stessa struttura)
       index.ts             esame, domini, competenze, risorse
       modules.ts           moduli, lezioni, verifiche rapide, esercizi
       questions.ts         banca domande

@@ -69,7 +69,7 @@ export interface Lesson {
 }
 
 export type ExerciseKind = 'lab' | 'codice' | 'scenario';
-export type CodeLanguage = 'sql' | 'dax' | 'kql' | 'pyspark' | 'powerquery';
+export type CodeLanguage = 'sql' | 'sparksql' | 'dax' | 'kql' | 'pyspark' | 'python' | 'powerquery' | 'yaml';
 
 export interface Exercise {
   id: string;
