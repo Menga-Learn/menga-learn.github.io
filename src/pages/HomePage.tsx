@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { certifications } from '../content';
+import { areas } from '../content/areas';
 import { countItems } from '../lib/catalog';
+import type { Area, Certification } from '../types';
 import { useProgress } from '../lib/progress';
 import { ProgressBar } from '../components/ProgressBar';
 import { accentProps } from '../lib/theme';
@@ -41,8 +43,142 @@ const PILLARS: { title: string; text: string; icon: ReactNode }[] = [
   },
 ];
 
-export function HomePage() {
+/** Gruppi del Quadro comune europeo di riferimento (QCER). */
+const CEFR_GROUPS = [
+  { letter: 'A', title: 'Utente base' },
+  { letter: 'B', title: 'Utente autonomo' },
+  { letter: 'C', title: 'Utente avanzato' },
+];
+
+function useCertStats(cert: Certification) {
   const state = useProgress();
+  const n = countItems(cert);
+  const p = state.certs[cert.id];
+  const done = (p?.lessons.length ?? 0) + (p?.exercises.length ?? 0);
+  return { n, done, total: n.lessons + n.exercises };
+}
+
+function CertCard({ cert }: { cert: Certification }) {
+  const { n, done, total } = useCertStats(cert);
+  return (
+    <Link to={`/c/${cert.id}`} className="card cert-card" {...accentProps(cert)}>
+      <div className="cert-code">{cert.code}</div>
+      <h3>{cert.title}</h3>
+      <p className="muted small">
+        {cert.vendor} · {cert.level}
+      </p>
+      <p>{cert.description}</p>
+      <div className="stats small muted">
+        <span>{n.lessons} lezioni</span>
+        <span>{n.exercises} esercizi</span>
+        <span>{n.questions} domande</span>
+      </div>
+      <ProgressBar value={done} max={total} label={`Avanzamento ${cert.code}`} />
+      <span className="small muted">
+        {done} di {total} attività completate
+      </span>
+    </Link>
+  );
+}
+
+function LevelCard({ cert }: { cert: Certification }) {
+  const { n, done, total } = useCertStats(cert);
+  return (
+    <Link to={`/c/${cert.id}`} className="card level-card" {...accentProps(cert)}>
+      <div className="level-head">
+        <span className="level-badge">{cert.code}</span>
+        <div>
+          <h3>{cert.level}</h3>
+          <span className="small muted">{cert.exam.label ?? cert.vendor}</span>
+        </div>
+      </div>
+      <p className="small">{cert.description}</p>
+      <div className="stats small muted">
+        <span>{n.lessons} lezioni</span>
+        <span>{n.exercises} esercizi</span>
+        <span>{n.questions} domande</span>
+      </div>
+      <ProgressBar value={done} max={total} label={`Avanzamento ${cert.code}`} />
+    </Link>
+  );
+}
+
+function SoonLevelCard({ item }: { item: Area['upcoming'][number] }) {
+  return (
+    <div className="card level-card level-soon">
+      <div className="level-head">
+        <span className="level-badge">{item.code}</span>
+        <div>
+          <h3>{item.title}</h3>
+          <span className="small muted">In preparazione</span>
+        </div>
+      </div>
+      {item.note && <p className="small muted">{item.note}</p>}
+    </div>
+  );
+}
+
+function AreaSection({ area, certs }: { area: Area; certs: Certification[] }) {
+  const count = certs.length;
+  return (
+    <section id={`area-${area.id}`} className="area" aria-labelledby={`area-title-${area.id}`} {...accentProps(area)}>
+      <header className="area-head">
+        <span className="area-mark" aria-hidden="true">
+          {area.mark}
+        </span>
+        <div>
+          <h2 id={`area-title-${area.id}`}>{area.name}</h2>
+          <p className="muted small">{area.tagline}</p>
+        </div>
+        <span className="area-count small">
+          {count} {count === 1 ? 'percorso' : 'percorsi'}
+        </span>
+      </header>
+      {area.levels ? (
+        <div className="cefr">
+          {CEFR_GROUPS.map((g) => {
+            const real = certs.filter((c) => c.code.startsWith(g.letter));
+            const soon = area.upcoming.filter((u) => u.code.startsWith(g.letter) && !real.some((c) => c.code === u.code));
+            return (
+              <div key={g.letter} className="cefr-group">
+                <div className="cefr-label small">
+                  <strong>{g.letter}</strong> {g.title}
+                </div>
+                {real.map((c) => (
+                  <LevelCard key={c.id} cert={c} />
+                ))}
+                {soon.map((u) => (
+                  <SoonLevelCard key={u.code} item={u} />
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="grid cards">
+          {certs.map((c) => (
+            <CertCard key={c.id} cert={c} />
+          ))}
+          {area.upcoming.length > 0 && (
+            <div className="card card-soon">
+              <h3 className="small muted upper">In arrivo</h3>
+              <ul className="soon-list">
+                {area.upcoming.map((u) => (
+                  <li key={u.code}>
+                    <strong>{u.code}</strong> <span className="muted">{u.title}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
+export function HomePage() {
+  const byArea = areas.map((area) => ({ area, certs: certifications.filter((c) => c.area === area.id) }));
   return (
     <>
       <section className="hero">
@@ -74,41 +210,29 @@ export function HomePage() {
           ))}
         </ul>
       </section>
-      <h2 className="section-title">Percorsi disponibili</h2>
-      <div className="grid cards">
-        {certifications.map((cert) => {
-          const n = countItems(cert);
-          const p = state.certs[cert.id];
-          const done = (p?.lessons.length ?? 0) + (p?.exercises.length ?? 0);
-          const totalItems = n.lessons + n.exercises;
-          return (
-            <Link key={cert.id} to={`/c/${cert.id}`} className="card cert-card" {...accentProps(cert)}>
-              <div className="cert-code">{cert.code}</div>
-              <h3>{cert.title}</h3>
-              <p className="muted small">
-                {cert.vendor} · {cert.level}
-              </p>
-              <p>{cert.description}</p>
-              <div className="stats small muted">
-                <span>{n.lessons} lezioni</span>
-                <span>{n.exercises} esercizi</span>
-                <span>{n.questions} domande</span>
-              </div>
-              <ProgressBar value={done} max={totalItems} label={`Avanzamento ${cert.code}`} />
-              <span className="small muted">
-                {done} di {totalItems} attività completate
+      <nav className="area-nav" aria-label="Aree">
+        <span className="small muted">Esplora per area</span>
+        <div className="area-chips">
+          {byArea.map(({ area, certs }) => (
+            <button
+              key={area.id}
+              type="button"
+              className="area-chip"
+              {...accentProps(area)}
+              onClick={() => document.getElementById(`area-${area.id}`)?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <span className="area-mark sm" aria-hidden="true">
+                {area.mark}
               </span>
-            </Link>
-          );
-        })}
-        <div className="card card-soon">
-          <h3>Prossime certificazioni</h3>
-          <p className="muted">
-            La piattaforma è pensata per accogliere altri percorsi (ad esempio DP-700, PL-300, AZ-900, Databricks Data
-            Analyst) aggiungendo solo nuovi contenuti.
-          </p>
+              {area.name}
+              <span className="muted small">{certs.length}</span>
+            </button>
+          ))}
         </div>
-      </div>
+      </nav>
+      {byArea.map(({ area, certs }) => (
+        <AreaSection key={area.id} area={area} certs={certs} />
+      ))}
     </>
   );
 }

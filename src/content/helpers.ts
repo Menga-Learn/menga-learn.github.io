@@ -29,6 +29,20 @@ export function q(
   };
 }
 
+/** Come `q()`, ma con un brano di ascolto in inglese letto dalla sintesi vocale. */
+export function lq(
+  id: string,
+  domainId: string,
+  listen: string,
+  prompt: string,
+  options: string[],
+  correct: number | number[],
+  explanation: string,
+  difficulty: 1 | 2 | 3 = 2,
+): Question {
+  return { ...q(id, domainId, prompt, options, correct, explanation, difficulty), listen };
+}
+
 export const SOLUTION_MARKER = '<!-- SOLUZIONE -->';
 
 /** Un esercizio è scritto in un unico file Markdown: consegna, marcatore, soluzione. */

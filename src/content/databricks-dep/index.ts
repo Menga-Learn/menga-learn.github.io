@@ -7,6 +7,7 @@ export const databricksDep: Certification = {
   code: 'DE Professional',
   title: 'Databricks Certified Data Engineer Professional',
   vendor: 'Databricks',
+  area: 'databricks',
   level: 'Professional',
   description:
     'Progetta pipeline di produzione avanzate su Databricks: streaming con stato, AUTO CDC, test, monitoraggio con system tables, ottimizzazione di costi e prestazioni, sicurezza e conformità GDPR, deploy con i bundle e metric view.',

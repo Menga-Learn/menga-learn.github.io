@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { certifications } from '../content';
+import { areas } from '../content/areas';
 import { nextTheme } from './theme';
 
 /** Rapporto di contrasto WCAG tra due colori #rrggbb. */
@@ -30,4 +31,9 @@ describe('tema', () => {
       expect(contrast(cert.accentDark, '#2d2b27')).toBeGreaterThanOrEqual(4.5);
     },
   );
+
+  it.each(areas.map((a) => [a.name, a] as const))("l'accento dell'area %s è leggibile in entrambi i temi", (_, area) => {
+    expect(contrast(area.accent, '#ede8de')).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(area.accentDark, '#2d2b27')).toBeGreaterThanOrEqual(4.5);
+  });
 });

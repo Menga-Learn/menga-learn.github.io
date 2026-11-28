@@ -12,6 +12,8 @@ export interface Certification {
   code: string;
   title: string;
   vendor: string;
+  /** Macro area della home (id in `src/content/areas.ts`) */
+  area: string;
   level: string;
   description: string;
   /**
@@ -31,6 +33,8 @@ export interface Certification {
 }
 
 export interface ExamInfo {
+  /** Nome breve dell'esame di riferimento, es. "Aptis General" */
+  label?: string;
   durationMinutes: number;
   passingScore: number;
   maxScore: number;
@@ -105,9 +109,26 @@ export interface Question {
   explanation: string;
   difficulty?: 1 | 2 | 3;
   tags?: string[];
+  /** Brano di ascolto (domande di listening): letto con la sintesi vocale, trascrizione a scomparsa */
+  listen?: string;
 }
 
 export interface Resource {
   title: string;
   url: string;
+}
+
+/** Macro area della home (Microsoft, Databricks, British Council, ...). */
+export interface Area {
+  id: string;
+  name: string;
+  /** Monogramma mostrato nel badge della sezione */
+  mark: string;
+  tagline: string;
+  accent: string;
+  accentDark: string;
+  /** Percorsi a livelli (es. QCER A1–C2): le schede mettono in evidenza il livello. */
+  levels?: boolean;
+  /** Percorsi annunciati ma non ancora disponibili */
+  upcoming: { code: string; title: string; note?: string }[];
 }
