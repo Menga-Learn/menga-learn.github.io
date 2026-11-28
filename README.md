@@ -2,13 +2,13 @@
 
 Web app per prepararsi alle certificazioni con **percorsi di apprendimento**, **lezioni**, **esercizi** e una sezione dedicata alle **domande di certificazione** (allenamento, simulazione d'esame a tempo, ripasso errori).
 
-Percorsi disponibili:
+La home è divisa per macro area. Percorsi disponibili:
 
-- **Microsoft DP-600 – Associato Ingegnere di Analisi dei Dati in Fabric**
-- **Databricks Certified Data Engineer Associate** (guida d'esame del 4 maggio 2026)
-- **Databricks Certified Data Engineer Professional** (guida d'esame del 9 ottobre 2026)
+- **Microsoft**: DP-600 – Associato Ingegnere di Analisi dei Dati in Fabric
+- **Databricks**: Certified Data Engineer Associate (guida d'esame del 4 maggio 2026) e Professional (guida del 9 ottobre 2026)
+- **British Council**: inglese per livello QCER, da **A1** a **C2**, con preparazione al test Aptis (General per A1–B2, Advanced per C1–C2). Ogni livello segue le parti di Aptis: grammatica e lessico (Core), Reading, Listening, Writing e Speaking.
 
-> Contenuti originali a scopo di studio, allineati all'elenco ufficiale delle competenze. Le domande non provengono dagli esami reali. Progetto non affiliato a Microsoft né a Databricks.
+> Contenuti originali a scopo di studio, allineati all'elenco ufficiale delle competenze. Le domande non provengono dagli esami reali. Progetto non affiliato a Microsoft, Databricks o British Council.
 
 ## Funzionalità
 
@@ -19,6 +19,7 @@ Percorsi disponibili:
   - *Allenamento*: per dominio, con correzione e spiegazione immediata;
   - *Simulazione d'esame*: domande distribuite secondo il peso dei domini, timer, navigazione libera, domande da rivedere e risultato per dominio;
   - *Ripasso errori*: ripropone le domande sbagliate.
+- **Ascolti** (percorsi di inglese): il brano è letto dalla sintesi vocale del browser con una voce inglese, anche rallentato; la trascrizione resta nascosta finché non la apri o rispondi.
 - **Avanzamento** salvato nel browser (`localStorage`), senza account né server.
 - Tema chiaro/scuro automatico, layout utilizzabile da smartphone.
 
@@ -46,6 +47,8 @@ src/
   types.ts                 modello dati (Certification, Module, Lesson, Exercise, Question)
   content/
     index.ts               registro delle certificazioni
+    areas.ts               macro aree della home (Microsoft, Databricks, British Council) e percorsi in arrivo
+    inglese/               livelli a1/ … c2/ con la stessa struttura; common.ts crea domini ed esame Aptis
     helpers.ts             q() per scrivere domande compatte, exercise() per gli esercizi
     dp600/                 (anche databricks-dea/ e databricks-dep/ con la stessa struttura)
       index.ts             esame, domini, competenze, risorse
@@ -60,7 +63,8 @@ src/
 ## Aggiungere una nuova certificazione
 
 1. Crea la cartella `src/content/<codice>/` seguendo l'esempio di `dp600` (domini con peso, moduli, lezioni in Markdown, esercizi, domande).
-2. Esporta un oggetto `Certification` e aggiungilo all'array in `src/content/index.ts`.
-3. Esegui `npm test`: i test di coerenza controllano id univoci, domini esistenti, risposte corrette valide e numero minimo di domande per la simulazione.
+2. Esporta un oggetto `Certification` (con il campo `area`) e aggiungilo all'array in `src/content/index.ts`. Per una nuova macro area aggiungi una voce in `src/content/areas.ts`; con `levels: true` le schede vengono raggruppate per livello QCER.
+3. Per le domande di ascolto usa `lq()` al posto di `q()`, passando il testo da leggere.
+4. Esegui `npm test`: i test di coerenza controllano id univoci, domini esistenti, risposte corrette valide e numero minimo di domande per la simulazione.
 
 Non serve modificare l'interfaccia: pagine, quiz e simulazione si adattano automaticamente.

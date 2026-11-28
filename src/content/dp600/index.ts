@@ -7,6 +7,7 @@ export const dp600: Certification = {
   code: 'DP-600',
   title: 'Associato Ingegnere di Analisi dei Dati in Fabric',
   vendor: 'Microsoft',
+  area: 'microsoft',
   level: 'Associate',
   description:
     "Progetta, crea e distribuisci soluzioni di analisi dei dati su scala enterprise con Microsoft Fabric: lakehouse, warehouse, trasformazioni, modelli semantici e governance.",

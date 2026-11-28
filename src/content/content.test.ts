@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { certifications } from '.';
+import { areas } from './areas';
 import type { Question } from '../types';
 
 // Controlli di coerenza sui contenuti: aiutano chi aggiunge nuove certificazioni.
@@ -8,6 +9,10 @@ describe.each(certifications.map((c) => [c.code, c] as const))('contenuti %s', (
   const lessons = cert.modules.flatMap((m) => m.lessons);
   const exercises = cert.modules.flatMap((m) => m.exercises);
   const allQuestions: Question[] = [...cert.questions, ...lessons.flatMap((l) => l.quickCheck)];
+
+  it("appartiene a un'area della home", () => {
+    expect(areas.map((a) => a.id)).toContain(cert.area);
+  });
 
   it('ha id univoci', () => {
     const ids = [...cert.modules.map((m) => m.id), ...lessons.map((l) => l.id), ...exercises.map((e) => e.id)];
@@ -54,5 +59,27 @@ describe.each(certifications.map((c) => [c.code, c] as const))('contenuti %s', (
 
   it('ha abbastanza domande per la simulazione', () => {
     expect(cert.questions.length).toBeGreaterThanOrEqual(cert.exam.simulationQuestions);
+  });
+});
+
+describe('aree della home', () => {
+  it('hanno id univoci e almeno un percorso o un annuncio', () => {
+    expect(new Set(areas.map((a) => a.id)).size).toBe(areas.length);
+    areas.forEach((a) => {
+      expect(certifications.some((c) => c.area === a.id) || a.upcoming.length > 0, a.id).toBe(true);
+    });
+  });
+
+  it('i percorsi a livelli usano i codici QCER', () => {
+    areas
+      .filter((a) => a.levels)
+      .forEach((a) =>
+        certifications.filter((c) => c.area === a.id).forEach((c) => expect(c.code, c.id).toMatch(/^[ABC][12]$/)),
+      );
+  });
+
+  it('gli id dei percorsi sono univoci', () => {
+    const ids = certifications.map((c) => c.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });

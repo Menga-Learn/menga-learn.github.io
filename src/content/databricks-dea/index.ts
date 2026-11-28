@@ -7,6 +7,7 @@ export const databricksDea: Certification = {
   code: 'DE Associate',
   title: 'Databricks Certified Data Engineer Associate',
   vendor: 'Databricks',
+  area: 'databricks',
   level: 'Associate',
   description:
     'Costruisci pipeline ETL sulla Data Intelligence Platform: ingestione con Auto Loader e Lakeflow Connect, trasformazioni in PySpark e SQL, Lakeflow Jobs, CI/CD con i bundle e governance con Unity Catalog.',

@@ -1,6 +1,7 @@
 import type { Question } from '../types';
 import { isCorrect } from '../lib/quiz';
 import { InlineMarkdown, Markdown } from './Markdown';
+import { ListenBox } from './ListenBox';
 
 interface Props {
   question: Question;
@@ -37,6 +38,7 @@ export function QuestionCard({ question, selected, onChange, revealed, number, t
         )}
         {domainLabel && <span className="muted small">{domainLabel}</span>}
       </header>
+      {question.listen && <ListenBox script={question.listen} revealed={revealed} />}
       <Markdown source={question.prompt} className="question-prompt" />
       <p className="question-hint">
         {multiple ? `Seleziona ${question.correct.length} risposte.` : 'Seleziona una risposta.'}
